@@ -15,23 +15,18 @@ class IncomingSeller(BaseSeller):
     last_name: str = "Ivanov"
     email: str = "Ivanov_John@mail.ru"
     password: str = "123456_qwerty"
-
-    # @field_validator("year")  # Валидатор, проверяет что дата не слишком древняя
-    # @staticmethod
-    # def validate_year(val: int):
-    #     if val < 1900:
-    #         raise PydanticCustomError("Validation error", "Year is wrong!")
-    #     return val
+    # password: str
 
 # Класс, валидирующий исходящие данные. Он уже содержит id
 class ReturnedSeller(BaseSeller):
+    #pass
     id: int
-    first_name: str 
-    last_name: str
-    email: str
-    password: str
+    # first_name: str 
+    # last_name: str
+    # email: str
+    # password: str
 
 
-# Класс для возврата массива объектов "Книга"
-class ReturnedAllSellers(BaseSeller):
+# Класс для возврата массива Продавцов
+class ReturnedAllSellers(BaseModel):
     sellers: list[ReturnedSeller]
