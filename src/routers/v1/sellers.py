@@ -4,10 +4,11 @@ from fastapi import APIRouter, Depends, Response, status
 from icecream import ic
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from src.configurations.database import get_async_session
 from src.models.sellers import Seller
-from src.schemas import IncomingSeller, ReturnedSeller, ReturnedAllSellers
+from src.schemas import IncomingSeller, ReturnedSeller, ReturnedAllSellers, ReturnedSellerBooks
 
 sellers_router = APIRouter(tags=["seller"], prefix="/seller")
 
@@ -46,10 +47,12 @@ async def get_all_sellers(session: DBSession):
 
 
 # Ручка для получения продавца по его АЙДИ
-@sellers_router.get("/{seller_id}", response_model=ReturnedSeller)
+@sellers_router.get("/{seller_id}", response_model=ReturnedSellerBooks)
 async def get_seller(seller_id: int, session: DBSession):
-    res = await session.get(Seller, seller_id)
-    return res
+    query = select(Seller).options(selectinload(Seller.books)).where(Seller.id == seller_id)
+    res = await session.execute(query)
+    seller = res.scalars().first()
+    return seller
 
 
 
