@@ -10,27 +10,18 @@ from src.models import books, sellers
 async def test_create_book(db_session, async_client):
     # Книга не может существовать без продавца, поэтому создаем вручную сначала его
     seller = sellers.Seller(
-        first_name="Andrey",
-        last_name="Gavrilov",
-        email="andr23_3s@mail.ru",
-        password="gg5sdeoR321!"
+        first_name="John", last_name="Ivanov", email="Ivanov_John@mail.ru", password="123456_qwerty"
     )
-    
+
     db_session.add(seller)
     await db_session.flush()
 
-    book_data = {
-        "title": "Wrong Code",
-        "author": "Robert Martin",
-        "pages": 104,
-        "year": 2007,
-        "seller_id": 1
-    }
-    
+    book_data = {"title": "Wrong Code", "author": "Robert Martin", "pages": 104, "year": 2007, "seller_id": 1}
+
     response = await async_client.post("/api/v1/books/", json=book_data)
-    
+
     assert response.status_code == status.HTTP_201_CREATED
-    
+
     result_data = response.json()
 
     assert result_data == {
@@ -39,7 +30,7 @@ async def test_create_book(db_session, async_client):
         "author": "Robert Martin",
         "count_pages": 104,
         "year": 2007,
-        #"seller_id": seller.id
+        # "seller_id": seller.id
     }
 
 
@@ -48,10 +39,7 @@ async def test_create_book(db_session, async_client):
 async def test_get_books(db_session, async_client):
     # Книга не может существовать без продавца, поэтому создаем вручную сначала его
     seller = sellers.Seller(
-        first_name="Andrey",
-        last_name="Gavrilov",
-        email="andr23_3s@mail.ru",
-        password="gg5sdeoR321!"
+        first_name="John", last_name="Ivanov", email="Ivanov_John@mail.ru", password="123456_qwerty"
     )
 
     db_session.add(seller)
@@ -59,20 +47,8 @@ async def test_get_books(db_session, async_client):
 
     # Создаем книги вручную, а не через ручку, чтобы нам не попасться на ошибку которая
     # может случиться в POST ручке
-    book = books.Book(
-        author="Pushkin",
-        title="Eugeny Onegin",
-        year=2001,
-        count_pages=104,
-        seller_id=2
-    )
-    book_2 = books.Book(
-        author="Lermontov",
-        title="Mziri",
-        year=1997,
-        count_pages=104,
-        seller_id=2
-    )
+    book = books.Book(author="Pushkin", title="Eugeny Onegin", year=2001, count_pages=104, seller_id=2)
+    book_2 = books.Book(author="Lermontov", title="Mziri", year=1997, count_pages=104, seller_id=2)
 
     db_session.add_all([book, book_2])
     await db_session.flush()
@@ -86,20 +62,8 @@ async def test_get_books(db_session, async_client):
     # Проверяем интерфейс ответа, на который у нас есть контракт.
     assert response.json() == {
         "books": [
-            {
-                "id": book.id,
-                "title": "Eugeny Onegin",
-                "author": "Pushkin",
-                "year": 2001,
-                "count_pages": 104
-            },
-            {
-                "id": book_2.id,
-                "title": "Mziri",
-                "author": "Lermontov",
-                "year": 1997,
-                "count_pages": 104
-            },
+            {"id": book.id, "title": "Eugeny Onegin", "author": "Pushkin", "year": 2001, "count_pages": 104},
+            {"id": book_2.id, "title": "Mziri", "author": "Lermontov", "year": 1997, "count_pages": 104},
         ]
     }
 
@@ -109,10 +73,7 @@ async def test_get_books(db_session, async_client):
 async def test_get_single_book(db_session, async_client):
     # Книга не может существовать без продавца, поэтому создаем вручную сначала его
     seller = sellers.Seller(
-        first_name="Andrey",
-        last_name="Gavrilov",
-        email="andr23_3s@mail.ru",
-        password="gg5sdeoR321!"
+        first_name="John", last_name="Ivanov", email="Ivanov_John@mail.ru", password="123456_qwerty"
     )
 
     db_session.add(seller)
@@ -120,20 +81,8 @@ async def test_get_single_book(db_session, async_client):
 
     # Создаем книги вручную, а не через ручку, чтобы нам не попасться на ошибку которая
     # может случиться в POST ручке
-    book = books.Book(
-        author="Pushkin",
-        title="Eugeny Onegin",
-        year=2001,
-        count_pages=104,
-        seller_id=3
-    )
-    book_2 = books.Book(
-        author="Lermontov",
-        title="Mziri",
-        year=1997,
-        count_pages=104,
-        seller_id=3
-    )
+    book = books.Book(author="Pushkin", title="Eugeny Onegin", year=2001, count_pages=104, seller_id=3)
+    book_2 = books.Book(author="Lermontov", title="Mziri", year=1997, count_pages=104, seller_id=3)
 
     db_session.add_all([book, book_2])
     await db_session.flush()
@@ -148,7 +97,7 @@ async def test_get_single_book(db_session, async_client):
         "title": "Eugeny Onegin",
         "author": "Pushkin",
         "year": 2001,
-        "count_pages": 104
+        "count_pages": 104,
     }
 
 
@@ -157,10 +106,7 @@ async def test_get_single_book(db_session, async_client):
 async def test_delete_book(db_session, async_client):
     # Книга не может существовать без продавца, поэтому создаем вручную сначала его
     seller = sellers.Seller(
-        first_name="Andrey",
-        last_name="Gavrilov",
-        email="andr23_3s@mail.ru",
-        password="gg5sdeoR321!"
+        first_name="John", last_name="Ivanov", email="Ivanov_John@mail.ru", password="123456_qwerty"
     )
 
     db_session.add(seller)
@@ -168,13 +114,7 @@ async def test_delete_book(db_session, async_client):
 
     # Создаем книги вручную, а не через ручку, чтобы нам не попасться на ошибку которая
     # может случиться в POST ручке
-    book = books.Book(
-        author="Pushkin",
-        title="Eugeny Onegin",
-        year=2001,
-        count_pages=104,
-        seller_id=seller.id
-    )
+    book = books.Book(author="Pushkin", title="Eugeny Onegin", year=2001, count_pages=104, seller_id=seller.id)
 
     db_session.add(book)
     await db_session.flush()
@@ -194,10 +134,7 @@ async def test_delete_book(db_session, async_client):
 async def test_update_book(db_session, async_client):
     # Книга не может существовать без продавца, поэтому создаем вручную сначала его
     seller = sellers.Seller(
-        first_name="Andrey",
-        last_name="Gavrilov",
-        email="andr23_3s@mail.ru",
-        password="gg5sdeoR321!"
+        first_name="John", last_name="Ivanov", email="Ivanov_John@mail.ru", password="123456_qwerty"
     )
 
     db_session.add(seller)
@@ -205,13 +142,7 @@ async def test_update_book(db_session, async_client):
 
     # Создаем книги вручную, а не через ручку, чтобы нам не попасться на ошибку которая
     # может случиться в POST ручке
-    book = books.Book(
-        author="Pushkin",
-        title="Eugeny Onegin",
-        year=2001,
-        count_pages=104,
-        seller_id=seller.id
-    )
+    book = books.Book(author="Pushkin", title="Eugeny Onegin", year=2001, count_pages=104, seller_id=seller.id)
 
     db_session.add(book)
     await db_session.flush()
@@ -224,7 +155,7 @@ async def test_update_book(db_session, async_client):
             "author": "Lermontov",
             "count_pages": 100,
             "year": 2007,
-            "seller_id": seller.id
+            "seller_id": seller.id,
         },
     )
 
