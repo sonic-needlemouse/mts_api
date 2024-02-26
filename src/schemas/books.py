@@ -11,10 +11,6 @@ class BaseBook(BaseModel):
     year: int
 
 
-
-
-
-
 # Класс для валидации входящих данных. Не содержит id так как его присваивает БД.
 class IncomingBook(BaseBook):
     year: int = 2024  # Пример присваивания дефолтного значения
@@ -22,7 +18,7 @@ class IncomingBook(BaseBook):
         alias="pages",
         default=300,
     )  # Пример использования тонкой настройки полей. Передачи в них метаинформации.
-    seller_id: int=1
+    seller_id: int = 1
 
     @field_validator("year")  # Валидатор, проверяет что дата не слишком древняя
     @staticmethod

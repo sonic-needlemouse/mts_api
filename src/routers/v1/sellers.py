@@ -8,7 +8,7 @@ from sqlalchemy.orm import selectinload
 
 from src.configurations.database import get_async_session
 from src.models.sellers import Seller
-from src.schemas import IncomingSeller, ReturnedSeller, ReturnedAllSellers, ReturnedSellerBooks
+from src.schemas import IncomingSeller, ReturnedAllSellers, ReturnedSeller, ReturnedSellerBooks
 
 sellers_router = APIRouter(tags=["seller"], prefix="/seller")
 
@@ -17,16 +17,15 @@ DBSession = Annotated[AsyncSession, Depends(get_async_session)]
 
 
 # Ручка для создания записи о продавце в БД. Возвращает созданного продавца.
-@sellers_router.post("/", response_model=ReturnedSeller, status_code=status.HTTP_201_CREATED)  # Прописываем модель ответа
+@sellers_router.post(
+    "/", response_model=ReturnedSeller, status_code=status.HTTP_201_CREATED
+)  # Прописываем модель ответа
 async def create_seller(
     seller: IncomingSeller, session: DBSession
 ):  # прописываем модель валидирующую входные данные и сессию как зависимость.
     # это - бизнес логика. Обрабатываем данные, сохраняем, преобразуем и т.д.
     new_seller = Seller(
-        first_name=seller.first_name,
-        last_name=seller.last_name,
-        email=seller.email,
-        password=seller.password
+        first_name=seller.first_name, last_name=seller.last_name, email=seller.email, password=seller.password
     )
     session.add(new_seller)
     await session.flush()
@@ -35,15 +34,14 @@ async def create_seller(
 
 
 # # Ручка, возвращающая всех продавцов
-@sellers_router.get(path='/', response_model=ReturnedAllSellers)
+@sellers_router.get(path="/", response_model=ReturnedAllSellers)
 async def get_all_sellers(session: DBSession):
-    # Хотим видеть формат: 
+    # Хотим видеть формат:
     # sellers: [{'id': 1, 'first_name': 'Ivan', ...}, {'id': 2, ...}]
     query = select(Seller)
     res = await session.execute(query)
     sellers = res.scalars().all()
     return {"sellers": sellers}
-
 
 
 # Ручка для получения продавца по его АЙДИ
@@ -53,9 +51,6 @@ async def get_seller(seller_id: int, session: DBSession):
     res = await session.execute(query)
     seller = res.scalars().first()
     return seller
-
-
-
 
 
 # Ручка для удаления продавца
