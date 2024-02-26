@@ -30,7 +30,6 @@ async def test_create_book(db_session, async_client):
         "author": "Robert Martin",
         "count_pages": 104,
         "year": 2007,
-        # "seller_id": seller.id
     }
 
 

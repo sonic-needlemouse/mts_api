@@ -99,8 +99,7 @@ async def test_get_single_seller(db_session, async_client):
                 "author": "Dostoevsky",
                 "title": "Idiot",
                 "year": 2000,
-                "count_pages": 104,
-                # "seller_id": seller_1.id
+                "count_pages": 104
             }
         ],
     }
