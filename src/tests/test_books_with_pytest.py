@@ -48,10 +48,10 @@ async def test_create_book(db_session, async_client):
 async def test_get_books(db_session, async_client):
     # Книга не может существовать без продавца, поэтому создаем вручную сначала его
     seller = sellers.Seller(
-        first_name="John",
-        last_name="Ivanov",
-        email="qwert@mail.ru",
-        password="gg5sde1"
+        first_name="Andrey",
+        last_name="Gavrilov",
+        email="andr23_3s@mail.ru",
+        password="gg5sdeoR321!"
     )
 
     db_session.add(seller)
@@ -91,16 +91,14 @@ async def test_get_books(db_session, async_client):
                 "title": "Eugeny Onegin",
                 "author": "Pushkin",
                 "year": 2001,
-                "count_pages": 104,
-                #"seller_id": seller.id
+                "count_pages": 104
             },
             {
                 "id": book_2.id,
                 "title": "Mziri",
                 "author": "Lermontov",
                 "year": 1997,
-                "count_pages": 104,
-                #"seller_id": seller.id
+                "count_pages": 104
             },
         ]
     }
