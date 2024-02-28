@@ -27,7 +27,7 @@ class IncomingSeller(BaseSeller):
 class ReturnedSeller(BaseSeller):
     id: int
 
-
+# Класс, для возврата списка книг, которыми торгует продавец
 class ReturnedSellerBooks(BaseSeller):
     books: list[ReturnedBook]
 

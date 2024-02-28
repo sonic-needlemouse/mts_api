@@ -35,7 +35,7 @@ async def create_seller(
     return new_seller
 
 
-# # Ручка, возвращающая всех продавцов
+# Ручка, возвращающая всех продавцов
 @sellers_router.get(path="/", response_model=ReturnedAllSellers)
 async def get_all_sellers(session: DBSession):
     # Хотим видеть формат:
