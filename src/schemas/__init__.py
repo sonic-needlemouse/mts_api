@@ -1,3 +1,5 @@
+"""Папка содержашая схемы для объектов"""
+
 from .books import *  # noqa F403
 from .sellers import *
 

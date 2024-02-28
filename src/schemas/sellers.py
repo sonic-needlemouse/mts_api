@@ -1,3 +1,5 @@
+"""Валидация Pydantic для продавцов"""
+
 from pydantic import BaseModel
 
 from .books import ReturnedBook

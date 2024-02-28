@@ -1,3 +1,5 @@
+"""Данная папка содержит роутеры"""
+
 from fastapi import APIRouter
 
 from .v1.books import books_router

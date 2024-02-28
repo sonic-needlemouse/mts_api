@@ -1,3 +1,5 @@
+"""Эндпоинты для продавцов"""
+
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Response, status

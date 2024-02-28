@@ -1,3 +1,5 @@
+"""Конфигурация соединения с БД"""
+
 import logging
 from typing import AsyncGenerator, Callable, Optional
 

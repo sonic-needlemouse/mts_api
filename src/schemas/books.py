@@ -1,3 +1,5 @@
+"""Валидация Pydantic для книг"""
+
 from pydantic import BaseModel, Field, field_validator
 from pydantic_core import PydanticCustomError
 

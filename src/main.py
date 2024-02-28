@@ -1,3 +1,5 @@
+"""Файл срдержащий модуль FastApi"""
+
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -8,7 +10,8 @@ from src.routers import v1_router
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):  # Рекомендуется теперь вместо @app.on_event()
+async def lifespan(app: FastAPI):
+    # Рекомендуется теперь вместо @app.on_event()
     # Запускается при старте приложения
     global_init()
     await create_db_and_tables()
@@ -20,6 +23,7 @@ async def lifespan(app: FastAPI):  # Рекомендуется теперь в�
 # Само приложение fastApi. именно оно запускается сервером и служит точкой входа
 # в нем можно указать разные параметры для сваггера и для ручек (эндпоинтов).
 def create_application():
+    """Приложение FastApi"""
     return FastAPI(
         title="Book Library App",
         description="Учебное приложение для группы MTS Shad",
@@ -35,12 +39,6 @@ app = create_application()
 
 def _configure():
     app.include_router(v1_router)
-
-
-# @app.on_event("startup")  # Вместо этого теперь рекомендуется lifespan
-# async def startup_event():
-#     global_init()
-#     await create_db_and_tables()
 
 
 _configure()

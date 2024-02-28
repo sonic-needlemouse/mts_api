@@ -1,3 +1,5 @@
+"""Эндпоинты для книг"""
+
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Response, status
