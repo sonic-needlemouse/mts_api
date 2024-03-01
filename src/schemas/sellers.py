@@ -16,11 +16,10 @@ class BaseSeller(BaseModel):
 
 # Класс для валидации входящих данных. Не содержит id так как его присваивает БД.
 class IncomingSeller(BaseSeller):
-    first_name: str = "John"  # Пример присваивания дефолтного значения
-    last_name: str = "Ivanov"
-    email: str = "Ivanov_John@mail.ru"
-    password: str = "123456_qwerty"
-    # password: str
+    first_name: str
+    last_name: str
+    email: str
+    password: str
 
 
 # Класс, валидирующий исходящие данные. Он уже содержит id
