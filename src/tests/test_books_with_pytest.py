@@ -16,7 +16,7 @@ async def test_create_book(db_session, async_client):
     db_session.add(seller)
     await db_session.flush()
 
-    book_data = {"title": "Wrong Code", "author": "Robert Martin", "pages": 104, "year": 2007, "seller_id": 1}
+    book_data = {"title": "Wrong Code", "author": "Robert Martin", "pages": 104, "year": 2007}
 
     response = await async_client.post("/api/v1/books/", json=book_data)
 
@@ -30,6 +30,7 @@ async def test_create_book(db_session, async_client):
         "author": "Robert Martin",
         "count_pages": 104,
         "year": 2007,
+        "seller_id":seller.id
     }
 
 
