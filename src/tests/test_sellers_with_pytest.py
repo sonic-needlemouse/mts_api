@@ -93,13 +93,23 @@ async def test_get_single_seller(db_session, async_client):
         "first_name": "John",
         "last_name": "Ivanov",
         "email": "Ivanov_John@mail.ru",
-        "books": [{"id": book.id, "author": "Dostoevsky", "title": "Idiot", "year": 2000, "count_pages": 104}],
+        # "books": [{"id": book.id, "author": "Dostoevsky", "title": "Idiot", "year": 2000, "count_pages": 104}],
+        "books": [
+            {
+                "title": "Idiot",
+                "author": "Dostoevsky",
+                "year": 2000,
+                "id": book.id,
+                "count_pages": 104,
+                "seller_id": seller_1.id,
+            }
+        ],
     }
 
 
 # Тест на ручку удаления продавца
 @pytest.mark.asyncio
-async def test_delete_book(db_session, async_client):
+async def test_delete_seller(db_session, async_client):
     # Создаем продавца вручную, а не через ручку, чтобы нам не попасться на ошибку которая
     # может случиться в POST ручке
     seller = sellers.Seller(
@@ -121,7 +131,7 @@ async def test_delete_book(db_session, async_client):
 
 # Тест на ручку обновления данных о продавце
 @pytest.mark.asyncio
-async def test_update_book(db_session, async_client):
+async def test_update_seller(db_session, async_client):
     # Создаем продавца вручную, а не через ручку, чтобы нам не попасться на ошибку которая
     # может случиться в POST ручке
     seller = sellers.Seller(
@@ -138,11 +148,11 @@ async def test_update_book(db_session, async_client):
             "first_name": "John",
             "last_name": "Sidorov",
             "email": "Sidorov_John@mail.ru",
-            "password": "12356415_qqdacsvsbscaca",
+            # "password": "12356415_qqdacsvsbscaca",
         },
     )
 
-    assert response.status_code == status.HTTP_200_OK
+    assert response.status_code == status.HTTP_202_ACCEPTED
     await db_session.flush()
 
     # Проверяем, что обновились все поля
