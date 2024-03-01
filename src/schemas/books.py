@@ -36,6 +36,7 @@ class ReturnedBook(BaseBook):
     count_pages: int
     seller_id: int
 
+
 # Класс для возврата массива объектов "Книга"
 class ReturnedAllBooks(BaseModel):
     books: list[ReturnedBook]

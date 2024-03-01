@@ -10,7 +10,7 @@ from sqlalchemy.orm import selectinload
 
 from src.configurations.database import get_async_session
 from src.models.sellers import Seller
-from src.schemas import IncomingSeller, ReturnedAllSellers, ReturnedSeller, ReturnedSellerBooks
+from src.schemas import BaseSeller, IncomingSeller, ReturnedAllSellers, ReturnedSeller, ReturnedSellerBooks
 
 sellers_router = APIRouter(tags=["seller"], prefix="/seller")
 
@@ -66,9 +66,8 @@ async def delete_seller(seller_id: int, session: DBSession):
     return Response(status_code=status.HTTP_204_NO_CONTENT)  # Response может вернуть текст и метаданные.
 
 
-# Ручка для обновления данных о книге
-@sellers_router.put("/{seller_id}")
-async def update_seller(seller_id: int, new_data: ReturnedSeller, session: DBSession):
+@sellers_router.put("/{seller_id}", response_model=ReturnedSeller, status_code=status.HTTP_202_ACCEPTED)
+async def update_seller(seller_id: int, new_data: BaseSeller, session: DBSession):
     # Оператор "морж", позволяющий одновременно и присвоить значение и проверить его.
     if updated_seller := await session.get(Seller, seller_id):
         updated_seller.first_name = new_data.first_name

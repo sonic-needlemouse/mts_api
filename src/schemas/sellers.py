@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from .books import ReturnedBook
 
-__all__ = ["IncomingSeller", "ReturnedSeller", "ReturnedAllSellers", "ReturnedSellerBooks"]
+__all__ = ["BaseSeller", "IncomingSeller", "ReturnedSeller", "ReturnedAllSellers", "ReturnedSellerBooks"]
 
 
 # Базовый класс "Продавцы", содержащий поля, которые есть во всех классах-наследниках.
@@ -25,6 +25,7 @@ class IncomingSeller(BaseSeller):
 # Класс, валидирующий исходящие данные. Он уже содержит id
 class ReturnedSeller(BaseSeller):
     id: int
+
 
 # Класс, для возврата списка книг, которыми торгует продавец
 class ReturnedSellerBooks(BaseSeller):
