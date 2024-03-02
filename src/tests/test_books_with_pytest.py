@@ -47,8 +47,8 @@ async def test_get_books(db_session, async_client):
 
     # Создаем книги вручную, а не через ручку, чтобы нам не попасться на ошибку которая
     # может случиться в POST ручке
-    book = books.Book(author="Pushkin", title="Eugeny Onegin", year=2001, count_pages=104, seller_id=2)
-    book_2 = books.Book(author="Lermontov", title="Mziri", year=1997, count_pages=104, seller_id=2)
+    book = books.Book(author="Pushkin", title="Eugeny Onegin", year=2001, count_pages=104, seller_id=seller.id)
+    book_2 = books.Book(author="Lermontov", title="Mziri", year=1997, count_pages=104, seller_id=seller.id)
 
     db_session.add_all([book, book_2])
     await db_session.flush()
@@ -62,8 +62,8 @@ async def test_get_books(db_session, async_client):
     # Проверяем интерфейс ответа, на который у нас есть контракт.
     assert response.json() == {
         "books": [
-            {"id": book.id, "title": "Eugeny Onegin", "author": "Pushkin", "year": 2001, "count_pages": 104},
-            {"id": book_2.id, "title": "Mziri", "author": "Lermontov", "year": 1997, "count_pages": 104},
+            {"title": "Eugeny Onegin", "author": "Pushkin", "year": 2001, "id": book.id, "count_pages": 104, "seller_id":seller.id},
+            {"title": "Mziri", "author": "Lermontov", "year": 1997, "id": book_2.id, "count_pages": 104, "seller_id":seller.id},
         ]
     }
 
@@ -81,8 +81,8 @@ async def test_get_single_book(db_session, async_client):
 
     # Создаем книги вручную, а не через ручку, чтобы нам не попасться на ошибку которая
     # может случиться в POST ручке
-    book = books.Book(author="Pushkin", title="Eugeny Onegin", year=2001, count_pages=104, seller_id=3)
-    book_2 = books.Book(author="Lermontov", title="Mziri", year=1997, count_pages=104, seller_id=3)
+    book = books.Book(author="Pushkin", title="Eugeny Onegin", year=2001, count_pages=200, seller_id=seller.id)
+    book_2 = books.Book(author="Lermontov", title="Mziri", year=1997, count_pages=300, seller_id=seller.id)
 
     db_session.add_all([book, book_2])
     await db_session.flush()
@@ -96,8 +96,9 @@ async def test_get_single_book(db_session, async_client):
         "id": book.id,
         "title": "Eugeny Onegin",
         "author": "Pushkin",
+        "count_pages": 200,
         "year": 2001,
-        "count_pages": 104,
+        "seller_id":seller.id
     }
 
 
