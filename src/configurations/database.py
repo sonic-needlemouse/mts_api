@@ -1,3 +1,5 @@
+"""Конфигурация соединения с БД"""
+
 import logging
 from typing import AsyncGenerator, Callable, Optional
 
@@ -26,7 +28,7 @@ def global_init() -> None:
         return
 
     if not __async_engine:
-        __async_engine = create_async_engine(url=SQLALCHEMY_DATABASE_URL, echo=False)  # TODO
+        __async_engine = create_async_engine(url=SQLALCHEMY_DATABASE_URL, echo=False)
 
     __session_factory = async_sessionmaker(__async_engine)
 

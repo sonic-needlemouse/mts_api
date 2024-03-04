@@ -1,3 +1,5 @@
+"""Базовая модель"""
+
 from sqlalchemy.orm import DeclarativeBase
 
 

@@ -1,3 +1,5 @@
+"""Валидация Pydantic для книг"""
+
 from pydantic import BaseModel, Field, field_validator
 from pydantic_core import PydanticCustomError
 
@@ -18,6 +20,7 @@ class IncomingBook(BaseBook):
         alias="pages",
         default=300,
     )  # Пример использования тонкой настройки полей. Передачи в них метаинформации.
+    seller_id: int = 1
 
     @field_validator("year")  # Валидатор, проверяет что дата не слишком древняя
     @staticmethod
@@ -31,6 +34,7 @@ class IncomingBook(BaseBook):
 class ReturnedBook(BaseBook):
     id: int
     count_pages: int
+    seller_id: int
 
 
 # Класс для возврата массива объектов "Книга"

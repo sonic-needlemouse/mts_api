@@ -1,3 +1,6 @@
-from .books import *  # noqa F403
+"""Папка содержашая схемы для объектов"""
 
-__all__ = books.__all__  # noqa F405
+from .books import *  # noqa F403
+from .sellers import *
+
+__all__ = [books.__all__, sellers.__all__]  # noqa F405
